@@ -1,0 +1,506 @@
+﻿<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bucks2Bar — Income & Expense Tracker</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                background-color: #f8f9fa;
+                min-height: 100vh;
+            }
+            .page-title {
+                letter-spacing: 0.02em;
+            }
+            .table-responsive {
+                max-height: 64vh;
+            }
+            .chart-card {
+                min-height: 420px;
+            }
+            input[type='number'] {
+                min-width: 120px;
+            }
+            .form-control:focus {
+                box-shadow: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container py-4">
+            <header class="mb-4">
+                <div
+                    class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3"
+                >
+                    <div>
+                        <h1 class="h2 page-title">Bucks2Bar</h1>
+                        <p class="text-muted mb-0">
+                            Track monthly income and expenses, then visualize
+                            them in a live bar chart.
+                        </p>
+                    </div>
+                    <div class="text-md-end">
+                        <span class="badge bg-success me-1">Income</span>
+                        <span class="badge bg-danger">Expense</span>
+                    </div>
+                </div>
+            </header>
+
+            <form class="row g-3 align-items-end mb-4" novalidate>
+                <div class="col-12 col-md-10">
+                    <label for="username" class="form-label mb-1">
+                        Username
+                    </label>
+                    <input
+                        id="username"
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter username"
+                        minlength="3"
+                        pattern="(?=.*[A-Z]).{3,}"
+                        required
+                        title="Minimum 3 characters and at least one uppercase letter"
+                    />
+                </div>
+                <div class="col-12 col-md-2 text-md-end">
+                    <button type="submit" class="btn btn-success w-100">
+                        Submit
+                    </button>
+                </div>
+            </form>
+            <div id="username-message" aria-live="polite"></div>
+
+            <ul class="nav nav-pills mb-4" id="main-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button
+                        class="nav-link active"
+                        id="data-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#data-panel"
+                        type="button"
+                        role="tab"
+                        aria-controls="data-panel"
+                        aria-selected="true"
+                    >
+                        Data
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button
+                        class="nav-link"
+                        id="charts-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#charts-panel"
+                        type="button"
+                        role="tab"
+                        aria-controls="charts-panel"
+                        aria-selected="false"
+                    >
+                        Charts
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div
+                    class="tab-pane fade show active"
+                    id="data-panel"
+                    role="tabpanel"
+                    aria-labelledby="data-tab"
+                >
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title h5">Monthly Inputs</h2>
+                            <p class="text-muted">
+                                Enter income and expense values for each month
+                                in ₹.
+                            </p>
+                            <div class="table-responsive">
+                                <table
+                                    class="table table-bordered align-middle mb-0"
+                                >
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Month</th>
+                                            <th scope="col" class="text-end">
+                                                Income (₹)
+                                            </th>
+                                            <th scope="col" class="text-end">
+                                                Expense (₹)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Jan</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Jan"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Jan"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Feb</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Feb"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Feb"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Mar</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Mar"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Mar"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Apr</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Apr"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Apr"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">May</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="May"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="May"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Jun</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Jun"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Jun"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Jul</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Jul"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Jul"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Aug</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Aug"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Aug"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Sep</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Sep"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Sep"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Oct</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Oct"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Oct"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Nov</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Nov"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Nov"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Dec</th>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Dec"
+                                                    data-type="income"
+                                                />
+                                            </td>
+                                            <td class="text-end">
+                                                <input
+                                                    type="number"
+                                                    class="form-control form-control-sm text-end"
+                                                    min="0"
+                                                    step="100"
+                                                    value="0"
+                                                    data-month="Dec"
+                                                    data-type="expense"
+                                                />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot class="table-group-divider">
+                                        <tr>
+                                            <th scope="row">Total</th>
+                                            <td
+                                                class="text-end fw-semibold"
+                                                id="total-income"
+                                            >
+                                                ₹0
+                                            </td>
+                                            <td
+                                                class="text-end fw-semibold"
+                                                id="total-expense"
+                                            >
+                                                ₹0
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="tab-pane fade"
+                    id="charts-panel"
+                    role="tabpanel"
+                    aria-labelledby="charts-tab"
+                >
+                    <div class="card shadow-sm chart-card">
+                        <div class="card-body d-flex flex-column h-100">
+                            <div class="mb-3">
+                                <div
+                                    class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3"
+                                >
+                                    <div>
+                                        <h2 class="card-title h5">
+                                            Income vs Expense Chart
+                                        </h2>
+                                        <p class="text-muted mb-0">
+                                            Switch back to the Data tab to
+                                            update values and see the chart
+                                            refresh automatically.
+                                        </p>
+                                    </div>
+                                    <button
+                                        id="download-chart"
+                                        type="button"
+                                        class="btn btn-outline-primary btn-sm"
+                                    >
+                                        Download PNG
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <canvas id="budget-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
