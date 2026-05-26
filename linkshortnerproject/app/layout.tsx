@@ -40,18 +40,27 @@ export default function RootLayout({
             <body className='min-h-full flex flex-col bg-slate-950 text-slate-50'>
                 <ClerkProvider>
                     <header className='border-b border-slate-800 px-6 py-4 mb-6'>
-                        <div className='flex items-center gap-4'>
-                            <Show when='signed-out'>
-                                <SignInButton>
-                                    <Button variant='default'>Sign in</Button>
-                                </SignInButton>
-                                <SignUpButton>
-                                    <Button variant='outline'>Sign up</Button>
-                                </SignUpButton>
-                            </Show>
-                            <Show when='signed-in'>
-                                <UserButton />
-                            </Show>
+                        <div className='flex items-center justify-between'>
+                            <h1 className='text-2xl font-bold'>
+                                Link Shortner
+                            </h1>
+                            <div className='flex items-center gap-4'>
+                                <Show when='signed-out'>
+                                    <SignInButton mode='modal'>
+                                        <Button variant='default'>
+                                            Sign in
+                                        </Button>
+                                    </SignInButton>
+                                    <SignUpButton mode='modal'>
+                                        <Button variant='outline'>
+                                            Sign up
+                                        </Button>
+                                    </SignUpButton>
+                                </Show>
+                                <Show when='signed-in'>
+                                    <UserButton />
+                                </Show>
+                            </div>
                         </div>
                     </header>
                     {children}
