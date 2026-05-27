@@ -1,15 +1,15 @@
 import type {Metadata} from 'next';
 import './globals.css';
 
-import {Geist, Geist_Mono} from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 
-import {Button} from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
-    ClerkProvider,
-    Show,
-    SignInButton,
-    SignUpButton,
-    UserButton,
+	ClerkProvider,
+	Show,
+	SignInButton,
+	SignUpButton,
+	UserButton,
 } from '@clerk/nextjs';
 
 const geistSans = Geist({
@@ -38,7 +38,10 @@ export default function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
         >
             <body className='min-h-full flex flex-col bg-slate-950 text-slate-50'>
-                <ClerkProvider>
+                <ClerkProvider
+                    signInFallbackRedirectUrl='/dashboard'
+                    signUpFallbackRedirectUrl='/dashboard'
+                >
                     <header className='border-b border-slate-800 px-6 py-4 mb-6'>
                         <div className='flex items-center justify-between'>
                             <h1 className='text-2xl font-bold'>
