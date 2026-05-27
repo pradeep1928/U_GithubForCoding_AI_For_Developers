@@ -1,3 +1,6 @@
+---
+description: Read this before implementing or modifying UI components in the project.
+---
 # shadcn UI Instructions for linkshortnerproject
 
 This app uses shadcn UI for all user interface elements. Follow these rules for UI work in the repository.

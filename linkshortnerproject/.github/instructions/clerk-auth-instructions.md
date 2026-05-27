@@ -1,3 +1,7 @@
+---
+description: Read this before implementing or modifying authentication in the project.
+---
+
 # Clerk Authentication Rules for linkshortnerproject
 
 These instructions define how auth must work in this app.

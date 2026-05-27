@@ -2,8 +2,6 @@
 
 These instructions are for AI agents working on the `linkshortnerproject` repository. Follow the project conventions closely and keep changes aligned with the existing Next.js + TypeScript + Tailwind + Drizzle stack.
 
-For detail guidlines on specific topics, refer to the modular documentatin in the `/docs` directory. It is incredibly important to ALWAYS read the relevant individual `.md` instruction file in `/docs` BEFORE generating any code.
-
 ## 1. Project Overview
 
 - This is a Next.js app using the **App Router** (`app/` directory).
@@ -11,7 +9,6 @@ For detail guidlines on specific topics, refer to the modular documentatin in th
 - Styling is built with **Tailwind CSS v4** and shadcn-inspired utility classes.
 - Database access is handled through **Drizzle ORM** and **Neon HTTP**.
 - UI primitives follow the existing `components/ui/` pattern.
-- All UI elements should use shadcn UI components; see `docs/shadcn-ui-instructions.md`.
 - Path alias `@/` is configured to map to the repository root.
 
 ## 2. General Coding Standards
@@ -82,8 +79,5 @@ For detail guidlines on specific topics, refer to the modular documentatin in th
 ## 10. Clerk Auth Rules
 
 - All auth in this app must be handled by Clerk only.
-- Refer to `docs/clerk-auth-instructions.md` for route protection and sign-in/sign-up behavior.
-
----
 
 These instructions are the guiding rules for AI-assisted development on this repository. Follow them carefully for any agent-driven changes.

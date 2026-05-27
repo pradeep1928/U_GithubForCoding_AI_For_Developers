@@ -1,20 +1,24 @@
-import { redirect } from 'next/navigation';
+import {redirect} from 'next/navigation';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { auth } from '@clerk/nextjs/server';
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
+import {auth} from '@clerk/nextjs/server';
 
-import { getUserLinks } from '../../data/links';
+import {getUserLinks} from '../../data/links';
+import {CreateLinkDialog} from './create-link-dialog';
+import {DeleteLinkDialog} from './delete-link-dialog';
+import {EditLinkDialog} from './edit-link-dialog';
 
 export default async function DashboardPage() {
     const {userId} = await auth();
     if (!userId) redirect('/');
 
     const userLinks = await getUserLinks(userId);
-    console.log(userLinks);
     return (
         <div className='p-6'>
-            <h1 className='text-3xl font-bold mb-6'>Dashboard</h1>
-
+            <div className='flex justify-between items-center mb-6'>
+                <h1 className='text-3xl font-bold'>Dashboard</h1>
+                <CreateLinkDialog />
+            </div>
             {userLinks.length === 0 ? (
                 <p className='text-muted-foreground'>No links created yet.</p>
             ) : (
@@ -22,7 +26,7 @@ export default async function DashboardPage() {
                     {userLinks.map((link) => (
                         <Card
                             key={link.id}
-                            className='hover:shadow-lg transition'
+                            className='hover:shadow-lg transition bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-lg p-8 hover:border-slate-600/80 transition-all hover:shadow-lg hover:shadow-cyan-500/10'
                         >
                             <CardHeader>
                                 <CardTitle className='text-lg'>
@@ -61,6 +65,14 @@ export default async function DashboardPage() {
                                             link.createdAt!,
                                         ).toLocaleString()}
                                     </p>
+
+                                    <div className='flex gap-2 pt-3'>
+                                        <EditLinkDialog
+                                            id={link.id}
+                                            initialUrl={link.url}
+                                        />
+                                        <DeleteLinkDialog id={link.id} />
+                                    </div>
                                 </div>
                             </CardContent>
                         </Card>
