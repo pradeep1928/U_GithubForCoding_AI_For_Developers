@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "hooks": {
+    "postToolUse": [{
+    "type": "command",
+    "bash": "bash .github/hooks/format.sh"
+    }]
+
+  }
+}
